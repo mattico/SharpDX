@@ -852,6 +852,20 @@
     <map method="IMFCapture[PR].*Sink::SetOutputByteStream" visibility="internal" property="false" />
     <map param="IMFCaptureSink::GetService::ppUnknown" return="true" />
 
+    <map interface="IMFTransform" name="ITransform" callback-visibility="public" callback="true" callback-dual="true" callback-name="Transform"/>
+    <map method="IMFTransform::.*" visibility="internal" check="false" property="false"/>
+    
+    <map param="IMFTransform::ProcessOutput::dwFlags" type="_MFT_PROCESS_OUTPUT_FLAGS"/>
+    <map param="IMFTransform::ProcessOutput::pdwStatus" type="_MFT_PROCESS_OUTPUT_STATUS" attribute="out"/>
+
+    <map param="IMFTransform::SetInputType::dwFlags" type="_MFT_SET_TYPE_FLAGS"/>
+    
+    <map param="IMFTransform::SetOutputType::dwFlags" type="_MFT_SET_TYPE_FLAGS"/>
+
+    <map param="IMFTransform::GetInputStatus::dwFlags" type="_MFT_INPUT_STATUS_FLAGS"/>
+    
+    <map param="IMFTransform::GetOutputStatus::dwFlags" type="_MFT_OUTPUT_STATUS_FLAGS"/>
+
     <!--
     // *****************************************************************
     // MediaFoundation Functions
@@ -1015,14 +1029,6 @@
     <map param="MFEnumDeviceSources::pppSourceActivate" type="void" attribute="out"/>
 
     <map param="IMFASFMultiplexer::GetNextPacket::pdwStatusFlags" type="ASF_STATUSFLAGS" attribute="out"/>
-
-    <map method="IMFTransform::GetStreamIDs" visibility="internal" check ="false"/>
-
-    <map method="IMFTransform::GetOutputAvailableType" visibility="internal" check ="false"/>
-
-    <map method="IMFTransform::ProcessOutput" visibility="internal" check ="false"/>
-    <map param="IMFTransform::ProcessOutput::dwFlags" type="_MFT_PROCESS_OUTPUT_FLAGS"/>
-    <map param="IMFTransform::ProcessOutput::pdwStatus" type="_MFT_PROCESS_OUTPUT_STATUS" attribute="out"/>
 
     <ifdef name="STORE_APP">
       <remove function="MFCheckContentProtectionDevice" />

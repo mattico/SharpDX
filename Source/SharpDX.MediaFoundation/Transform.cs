@@ -104,7 +104,7 @@ namespace SharpDX.MediaFoundation
             var result = ProcessOutput(dwFlags, outputSamplesRef.Length, ref outputSamplesRef[0], out dwStatusRef);
 
             // Check if it needs more input
-            if (result== ResultCode.TransformNeedMoreInput)
+            if (result == ResultCode.TransformNeedMoreInput)
             {
                 needMoreInput = true;
             }

@@ -95,7 +95,7 @@ namespace SharpDX.MediaFoundation
                 }
                 return Result.Ok.Code;
             }
-       }
+        }
 
         protected override CppObjectVtbl GetVtbl
         {
