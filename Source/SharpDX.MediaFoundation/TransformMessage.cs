@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SharpDX;
-using SharpDX.MediaFoundation.DirectX;
 
 namespace SharpDX.MediaFoundation
 {
     public class TransformMessage
     {
         public TransformMessageType Type { get; }
-        protected readonly IntPtr Param;
+        internal readonly IntPtr Param;
 
         protected TransformMessage(TransformMessageType type, IntPtr param)
         {
@@ -23,21 +22,21 @@ namespace SharpDX.MediaFoundation
             switch (type)
             {
             case TransformMessageType.SetD3DManager:
-                DXGIDeviceManager mgr;
-                if ((mgr = ComObject.QueryInterfaceOrNull<DXGIDeviceManager>(param)) != null)
-                    return new TransformSetD3DManagerMessage(mgr);
+                DXGIDeviceManager dxgiManager;
+                if ((dxgiManager = ComObject.QueryInterfaceOrNull<DXGIDeviceManager>(param)) != null)
+                    return new TransformSetD3DManagerMessage(dxgiManager);
 #if DESKTOP_APP
-                Direct3DDeviceManager mgr;
-                else if ((mgr = ComObject.QueryInterfaceOrNull<Direct3DDeviceManager>(param)) != null)
-                    return new TransformSetD3DManagerMessage(mgr);
+                Direct3DDeviceManager d3dManager;
+                if ((d3dManager = ComObject.QueryInterfaceOrNull<SharpDX.MediaFoundation.DirectX.Direct3DDeviceManager>(param)) != null)
+                    return new TransformSetD3DManagerMessage(d3dManager);
 #endif
-                else return new TransformMessage(type, IntPtr.Zero);
+                goto default;
             case TransformMessageType.NotifyEndOfStream:
                 return new TransformNotifyEndOfStreamMessage(param.ToInt32());
             case TransformMessageType.CommandMarker:
                 return new TransformCommandMarkerMessage(param);
             default:
-                return new TranformMessage(type, IntPtr.Zero);
+                return new TransformMessage(type, param);
             }
         }
     }
@@ -47,14 +46,14 @@ namespace SharpDX.MediaFoundation
         public ComObject D3DManager => new ComObject(Param);
 
 #if DESKTOP_APP
-        public TransformSetD3DManagerMessage(Direct3DDeviceManager d3dManager)
-            : base(TransformMessageType.SetD3DManager, d3dManager)
+        public TransformSetD3DManagerMessage(SharpDX.MediaFoundation.DirectX.Direct3DDeviceManager d3dManager)
+            : base(TransformMessageType.SetD3DManager, d3dManager.NativePointer)
         {
         } 
 #endif
 
         public TransformSetD3DManagerMessage(DXGIDeviceManager d3dManager)
-            : base(TransformMessageType.SetD3DManager, d3dManager)
+            : base(TransformMessageType.SetD3DManager, d3dManager.NativePointer)
         {
         }
     }
@@ -64,7 +63,7 @@ namespace SharpDX.MediaFoundation
         public int InputStreamID => Param.ToInt32();
 
         public TransformNotifyEndOfStreamMessage(int inputStreamID)
-            : base(TransformMessageType.NotifyEndOfStream, inputStreamID)
+            : base(TransformMessageType.NotifyEndOfStream, (IntPtr)inputStreamID)
         {
         }
     }

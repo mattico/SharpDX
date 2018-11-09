@@ -889,8 +889,18 @@
     <map param="IMFCaptureSink::GetService::ppUnknown" return="true" />
 
     <map interface="IMFTransform" name="ITransform" callback-visibility="public" callback="true" callback-dual="true" callback-name="Transform" autogen-shadow="false"/>
-    <map method="IMFTransform::.*" visibility="internal" check="false" return="true" property="false"/>
+    <map method="IMFTransform::.*" visibility="internal" property="false" check="false" return="true"/>
     
+    <map method="IMFTransform::GetStreamCount" check="true" return="false" visibility="public"/>
+    <map method="IMFTransform::GetStreamLimits" check="true" return="false" visibility="public"/>
+
+    <map method="IMFTransform::GetInputStreamInfo" check="true" return="false" visibility="public"/>
+    <map param="IMFTransform::GetInputStreamInfo::pStreamInfo" attribute="out" return="true"/>
+
+    <map method="IMFTransform::DeleteInputStream" check="true" return="false" visibility="public"/>
+    
+    <map param="IMFTransform::AddInputStreams::adwStreamIDs" type="int" attribute="buffer"/>
+
     <map param="IMFTransform::ProcessOutput::dwFlags" type="_MFT_PROCESS_OUTPUT_FLAGS"/>
     <map param="IMFTransform::ProcessOutput::pdwStatus" type="_MFT_PROCESS_OUTPUT_STATUS" attribute="out"/>
 
@@ -898,9 +908,11 @@
     
     <map param="IMFTransform::SetOutputType::dwFlags" type="_MFT_SET_TYPE_FLAGS"/>
 
-    <map param="IMFTransform::GetInputStatus::dwFlags" type="_MFT_INPUT_STATUS_FLAGS"/>
+    <map method="IMFTransform::GetInputStatus" check="true" return="false" visibility="public"/>
+    <map param="IMFTransform::GetInputStatus::pdwFlags" type="_MFT_INPUT_STATUS_FLAGS" attribute="out" return="true"/>
     
-    <map param="IMFTransform::GetOutputStatus::dwFlags" type="_MFT_OUTPUT_STATUS_FLAGS" attribute="out"/>
+    <map method="IMFTransform::GetOutputStatus" check="true" return="false" visibility="public"/>
+    <map param="IMFTransform::GetOutputStatus::pdwFlags" type="_MFT_OUTPUT_STATUS_FLAGS" attribute="out" return="true"/>
 
     <!--
     // *****************************************************************

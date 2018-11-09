@@ -26,38 +26,36 @@ namespace SharpDX.MediaFoundation
     [Shadow(typeof(TransformShadow))]
     public partial interface ITransform
     {
-        int MinimumInputStreams { get; }
-        int MaxmumInputStreams { get; }
-        int NumInputStreams { get; }
-        int[] InputStreamIDs { get; }
+        MediaAttributes Attributes { get; }
+        void ProcessMessage(TransformMessage message);
+
+        void GetStreamCount(out int inputStreams, out int outputStreams);
+        void GetStreamIDs(out int[] inputIDs, out int[] outputIDs);
+        void GetStreamLimits(out int inputMinimum, out int inputMaximum, out int outputMinimum, out int outputMaximum);
+
+        // Input Methods
         TransformInputStreamInfo GetInputStreamInfo(int inputStreamID);
         MediaAttributes GetInputStreamAttributes(int inputStreamID);
         void DeleteInputStream(int inputStreamID);
         void AddInputStreams(int[] streamIDs);
         MediaType[] GetInputAvailableTypes(int inputStreamID);
         void SetInputType(int inputStreamID, MediaType type);
-        int TestInputType(int inputStreamID, MediaType type);
+        Result TestInputType(int inputStreamID, MediaType type);
         MediaType GetInputCurrentType(int inputStreamID);
         TransformInputStatusFlags GetInputStatus(int inputStreamID);
-        void ProcessInput(int inputStreamID, Sample sample);
+        bool ProcessInput(int inputStreamID, Sample sample);
         void ProcessEvent(int inputStreamID, MediaEvent mediaEvent);
 
-        int MinimumOutputStreams { get; }
-        int MaxmumOutputStreams { get; }
-        int NumOutputStreams { get; }
-        int[] OutputStreamIDs { get; }
+        // Output Methods
         TransformOutputStreamInfo GetOutputStreamInfo(int outputStreamID);
         MediaAttributes GetOutputStreamAttributes(int outputStreamID);
         void DeleteOutputStream(int outputStreamID);
         void AddOutputStreams(int[] streamIDs);
         MediaType[] GetOutputAvailableTypes(int outputStreamID);
         void SetOutputType(int outputStreamID, MediaType type);
-        int TestOutputType(int outputStreamID, MediaType type);
+        Result TestOutputType(int outputStreamID, MediaType type);
         MediaType GetOutputCurrentType(int outputStreamID);
         TransformOutputStatusFlags GetOutputStatus(int outputStreamID);
-        TransformProcessOutputStatus ProcessOutput(TransformProcessOutputFlags flags, TransformOutputDataBuffer[] outputSamples);
-        
-        MediaAttributes Attributes { get; }
-        void ProcessMessage(TransformMessage message);
+        bool ProcessOutput(TransformProcessOutputFlags flags, TransformOutputDataBuffer[] outputSamples, out TransformProcessOutputStatus status);
     }
 }
