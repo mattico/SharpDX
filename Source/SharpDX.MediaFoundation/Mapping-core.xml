@@ -669,14 +669,41 @@
 
     <map enum="_MFT_ENUM_FLAG" name="TransformEnumFlag"/>
     <map enum-item="MFT_ENUM_FLAG_(.*)" name-tmp="$1"/>
+  
+    <map enum="MFT_MESSAGE_TYPE" name="TransformMessageType"/>
+    <map enum-item="MFT_MESSAGE_(.*)" name-tmp="$1"/>
+
+    <map enum="_MFT_INPUT_STREAM_INFO_FLAGS" name="TransformInputStreamInfoFlags"/>
+    <map enum-item="MFT_INPUT_STREAM_(.*)" name-tmp="$1"/>
+
+    <map enum="_MFT_OUTPUT_STREAM_INFO_FLAGS" name="TransformOutputStreamInfoFlags"/>
+    <map enum-item="MFT_OUTPUT_STREAM_(.*)" name-tmp="$1"/>
+    
     <map enum="_MFT_PROCESS_OUTPUT_FLAGS" name="TransformProcessOutputFlags"/>
     <map enum="_MFT_PROCESS_OUTPUT_STATUS" name="TransformProcessOutputStatus"/>
+    <map enum-item="MFT_PROCESS_OUTPUT_(.*)" name-tmp="$1"/>
+    
+    <map enum="_MFT_PROCESS_INPUT_FLAGS" name="TransformProcessInputFlags"/>
+    <map enum="_MFT_PROCESS_INPUT_STATUS" name="TransformProcessInputStatus"/>
+    <map enum-item="MFT_PROCESS_INPUT_(.*)" name-tmp="$1"/>
+
+    <map enum="_MFT_OUTPUT_DATA_BUFFER_FLAGS " name="TransformOutputDataBufferFlags"/>
+    <map enum-item="MFT_OUTPUT_DATA_BUFFER_(.*)" name-tmp="$1"/>
     
     <map enum="MF_MEDIAKEY_STATUS" name="MediaKeyStatusState"/>
     
     <map enum="#MF_CAPTURE_ENGINE_MEDIASOURCE" name="PreferredMediaStream" />
     <map enum-item="MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_(.*)" name="$1" />
 
+    <map enum="_MFT_OUTPUT_STATUS_FLAGS" name="TransformOutputStatusFlags"/>
+    <map enum-item="MFT_OUTPUT_STATUS_(.*)" name-tmp="$1"/>
+
+    <map enum="_MFT_INPUT_STATUS_FLAGS" name="TransformInputStatusFlags"/>
+    <map enum-item="MFT_INPUT_STATUS_(.*)" name-tmp="$1"/>
+
+    <map enum="_MFT_SET_TYPE_FLAGS" name="TransformSetTypeFlags"/>
+    <map enum-item="MFT_SET_TYPE_(.*)" name-tmp="$1"/>
+    
     <!--
     // *****************************************************************
     // MediaFoundation Structures
@@ -685,8 +712,17 @@
     <map struct="MF(.*)" name-tmp="$1"/>
 
     <map struct="MFVideoSurfaceInfo" marshalto="true"/>
-
+    
     <map enum-item="MFVideoRotationFormat_(.*)" name="Angle$1"/>
+
+    <map struct="MFT_OUTPUT_DATA_BUFFER" name="TransformOutputDataBuffer"/>
+    <map field="MFT_OUTPUT_DATA_BUFFER::dwStatus" type="_MFT_OUTPUT_DATA_BUFFER_FLAGS"/>
+    
+    <map struct="MFT_OUTPUT_STREAM_INFO" name="TransformOutputStreamInfo"/>
+    <map field="MFT_OUTPUT_STREAM_INFO::dwFlags" type="_MFT_OUTPUT_STREAM_INFO_FLAGS"/>
+    
+    <map struct="MFT_INPUT_STREAM_INFO" name="TransformInputStreamInfo"/>
+    <map field="MFT_INPUT_STREAM_INFO::dwFlags" type="_MFT_INPUT_STREAM_INFO_FLAGS"/>
 
     <!--
     // *****************************************************************
@@ -852,8 +888,8 @@
     <map method="IMFCapture[PR].*Sink::SetOutputByteStream" visibility="internal" property="false" />
     <map param="IMFCaptureSink::GetService::ppUnknown" return="true" />
 
-    <map interface="IMFTransform" name="ITransform" callback-visibility="public" callback="true" callback-dual="true" callback-name="Transform"/>
-    <map method="IMFTransform::.*" visibility="internal" check="false" property="false"/>
+    <map interface="IMFTransform" name="ITransform" callback-visibility="public" callback="true" callback-dual="true" callback-name="Transform" autogen-shadow="false"/>
+    <map method="IMFTransform::.*" visibility="internal" check="false" return="true" property="false"/>
     
     <map param="IMFTransform::ProcessOutput::dwFlags" type="_MFT_PROCESS_OUTPUT_FLAGS"/>
     <map param="IMFTransform::ProcessOutput::pdwStatus" type="_MFT_PROCESS_OUTPUT_STATUS" attribute="out"/>
@@ -864,7 +900,7 @@
 
     <map param="IMFTransform::GetInputStatus::dwFlags" type="_MFT_INPUT_STATUS_FLAGS"/>
     
-    <map param="IMFTransform::GetOutputStatus::dwFlags" type="_MFT_OUTPUT_STATUS_FLAGS"/>
+    <map param="IMFTransform::GetOutputStatus::dwFlags" type="_MFT_OUTPUT_STATUS_FLAGS" attribute="out"/>
 
     <!--
     // *****************************************************************

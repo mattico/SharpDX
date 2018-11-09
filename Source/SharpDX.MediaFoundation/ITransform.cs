@@ -26,28 +26,38 @@ namespace SharpDX.MediaFoundation
     [Shadow(typeof(TransformShadow))]
     public partial interface ITransform
     {
-        Result GetStreamLimits(out int dwInputMinimumRef, out int dwInputMaximumRef, out int dwOutputMinimumRef, out int dwOutputMaximumRef);
-        Result GetStreamCount(out int cInputStreamsRef, out int cOutputStreamsRef);
-        Result GetStreamIDs(int dwInputIDArraySize, int[] dwInputIDsRef, int dwOutputIDArraySize, int[] dwOutputIDsRef);
-        Result GetInputStreamInfo(int dwInputStreamID, out TInputStreamInformation streamInfoRef);
-        Result GetOutputStreamInfo(int dwOutputStreamID, out TOutputStreamInformation streamInfoRef);
-        Result GetAttributes(out MediaAttributes attributesRef);
-        Result GetInputStreamAttributes(int dwInputStreamID, out MediaAttributes attributesRef);
-        Result GetOutputStreamAttributes(int dwOutputStreamID, out MediaAttributes attributesRef);
-        Result DeleteInputStream(int dwStreamID);
-        Result AddInputStreams(int cStreams, int adwStreamIDs);
-        Result GetInputAvailableType(int dwInputStreamID, int dwTypeIndex, out MediaType typeOut);
-        Result GetOutputAvailableType(int dwOutputStreamID, int dwTypeIndex, out MediaType typeOut);
-        Result SetInputType(int dwInputStreamID, MediaType typeRef, MftSetTypeFlags dwFlags);
-        Result SetOutputType(int dwOutputStreamID, MediaType typeRef, MftSetTypeFlags dwFlags);
-        Result GetInputCurrentType(int dwInputStreamID, out MediaType typeOut);
-        Result GetOutputCurrentType(int dwOutputStreamID, out MediaType typeOut);
-        Result GetInputStatus(int dwInputStreamID, out int dwFlagsRef);
-        Result GetOutputStatus(out int dwFlagsRef);
-        Result SetOutputBounds(long hnsLowerBound, long hnsUpperBound);
-        Result ProcessEvent(int dwInputStreamID, MediaEvent eventRef);
-        Result ProcessMessage(TMessageType eMessage, IntPtr ulParam);
-        Result ProcessInput(int dwInputStreamID, Sample sampleRef, int dwFlags);
-        Result ProcessOutput(TransformProcessOutputFlags dwFlags, int cOutputBufferCount, ref TOutputDataBuffer outputSamplesRef, out TransformProcessOutputStatus dwStatusRef);
+        int MinimumInputStreams { get; }
+        int MaxmumInputStreams { get; }
+        int NumInputStreams { get; }
+        int[] InputStreamIDs { get; }
+        TransformInputStreamInfo GetInputStreamInfo(int inputStreamID);
+        MediaAttributes GetInputStreamAttributes(int inputStreamID);
+        void DeleteInputStream(int inputStreamID);
+        void AddInputStreams(int[] streamIDs);
+        MediaType[] GetInputAvailableTypes(int inputStreamID);
+        void SetInputType(int inputStreamID, MediaType type);
+        int TestInputType(int inputStreamID, MediaType type);
+        MediaType GetInputCurrentType(int inputStreamID);
+        TransformInputStatusFlags GetInputStatus(int inputStreamID);
+        void ProcessInput(int inputStreamID, Sample sample);
+        void ProcessEvent(int inputStreamID, MediaEvent mediaEvent);
+
+        int MinimumOutputStreams { get; }
+        int MaxmumOutputStreams { get; }
+        int NumOutputStreams { get; }
+        int[] OutputStreamIDs { get; }
+        TransformOutputStreamInfo GetOutputStreamInfo(int outputStreamID);
+        MediaAttributes GetOutputStreamAttributes(int outputStreamID);
+        void DeleteOutputStream(int outputStreamID);
+        void AddOutputStreams(int[] streamIDs);
+        MediaType[] GetOutputAvailableTypes(int outputStreamID);
+        void SetOutputType(int outputStreamID, MediaType type);
+        int TestOutputType(int outputStreamID, MediaType type);
+        MediaType GetOutputCurrentType(int outputStreamID);
+        TransformOutputStatusFlags GetOutputStatus(int outputStreamID);
+        TransformProcessOutputStatus ProcessOutput(TransformProcessOutputFlags flags, TransformOutputDataBuffer[] outputSamples);
+        
+        MediaAttributes Attributes { get; }
+        void ProcessMessage(TransformMessage message);
     }
 }

@@ -81,7 +81,7 @@ namespace SharpDX.MediaFoundation
                     ref int dwInputMaximumRef = ref Unsafe.AsRef<int>(param1);
                     ref int dwOutputMinimumRef = ref Unsafe.AsRef<int>(param2);
                     ref int dwOutputMaximumRef = ref Unsafe.AsRef<int>(param3);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetStreamLimits(out dwInputMinimumRef, out dwInputMaximumRef, out dwOutputMinimumRef, out dwOutputMaximumRef);
                     return result;
                 }
@@ -100,7 +100,7 @@ namespace SharpDX.MediaFoundation
                     Result result = default(Result);
                     ref int cInputStreamsRef = ref Unsafe.AsRef<int>(param0);
                     ref int cOutputStreamsRef = ref Unsafe.AsRef<int>(param1);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetStreamCount(out cInputStreamsRef, out cOutputStreamsRef);
                     return result;
                 }
@@ -119,14 +119,11 @@ namespace SharpDX.MediaFoundation
                     Result result = default(Result);
                     int dwInputIDArraySize = default(int);
                     dwInputIDArraySize = (int)param0;
-                    ref int* dwInputIDsRef_ = ref Unsafe.AsRef<int*>(param1);
-                    int dwInputIDsRef;
+                    ref int* dwInputIDsRef = ref Unsafe.AsRef<int*>(param1);
                     int dwOutputIDArraySize = default(int);
                     dwOutputIDArraySize = (int)param2;
-                    ref int* dwOutputIDsRef_ = ref Unsafe.AsRef<int*>(param3);
-                    int dwOutputIDsRef;
-
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ref int* dwOutputIDsRef = ref Unsafe.AsRef<int*>(param3);
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetStreamIDs(dwInputIDArraySize, dwInputIDsRef, dwOutputIDArraySize, dwOutputIDsRef);
                     return result;
                 }
@@ -145,8 +142,8 @@ namespace SharpDX.MediaFoundation
                     Result result = default(Result);
                     int dwInputStreamID = default(int);
                     dwInputStreamID = (int)param0;
-                    ref TInputStreamInformation streamInfoRef = ref Unsafe.AsRef<TInputStreamInformation>(param1);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ref TransformInputStreamInfo streamInfoRef = ref Unsafe.AsRef<TransformInputStreamInfo>(param1);
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetInputStreamInfo(dwInputStreamID, out streamInfoRef);
                     return result;
                 }
@@ -165,8 +162,8 @@ namespace SharpDX.MediaFoundation
                     Result result = default(Result);
                     int dwOutputStreamID = default(int);
                     dwOutputStreamID = (int)param0;
-                    ref TOutputStreamInformation streamInfoRef = ref Unsafe.AsRef<TOutputStreamInformation>(param1);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ref TransformOutputStreamInfo streamInfoRef = ref Unsafe.AsRef<TransformOutputStreamInfo>(param1);
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetOutputStreamInfo(dwOutputStreamID, out streamInfoRef);
                     return result;
                 }
@@ -185,7 +182,7 @@ namespace SharpDX.MediaFoundation
                     Result result = default(Result);
                     ref IntPtr attributesRef_ = ref Unsafe.AsRef<IntPtr>(param0);
                     MediaAttributes attributesRef;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetAttributes(out attributesRef);
                     attributesRef_ = SharpDX.CppObject.ToCallbackPtr<MediaAttributes>(attributesRef);
                     return result;
@@ -207,7 +204,7 @@ namespace SharpDX.MediaFoundation
                     dwInputStreamID = (int)param0;
                     ref IntPtr attributesRef_ = ref Unsafe.AsRef<IntPtr>(param1);
                     MediaAttributes attributesRef;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetInputStreamAttributes(dwInputStreamID, out attributesRef);
                     attributesRef_ = SharpDX.CppObject.ToCallbackPtr<MediaAttributes>(attributesRef);
                     return result;
@@ -229,7 +226,7 @@ namespace SharpDX.MediaFoundation
                     dwOutputStreamID = (int)param0;
                     ref IntPtr attributesRef_ = ref Unsafe.AsRef<IntPtr>(param1);
                     MediaAttributes attributesRef;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetOutputStreamAttributes(dwOutputStreamID, out attributesRef);
                     attributesRef_ = SharpDX.CppObject.ToCallbackPtr<MediaAttributes>(attributesRef);
                     return result;
@@ -249,7 +246,7 @@ namespace SharpDX.MediaFoundation
                     Result result = default(Result);
                     int dwStreamID = default(int);
                     dwStreamID = (int)param0;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.DeleteInputStream(dwStreamID);
                     return result;
                 }
@@ -269,7 +266,7 @@ namespace SharpDX.MediaFoundation
                     int cStreams = default(int);
                     cStreams = (int)param0;
                     int adwStreamIDs = Unsafe.AsRef<int>(param1);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.AddInputStreams(cStreams, adwStreamIDs);
                     return result;
                 }
@@ -292,7 +289,7 @@ namespace SharpDX.MediaFoundation
                     dwTypeIndex = (int)param1;
                     ref IntPtr typeOut_ = ref Unsafe.AsRef<IntPtr>(param2);
                     MediaType typeOut;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetInputAvailableType(dwInputStreamID, dwTypeIndex, out typeOut);
                     typeOut_ = SharpDX.CppObject.ToCallbackPtr<MediaType>(typeOut);
                     return result;
@@ -316,7 +313,7 @@ namespace SharpDX.MediaFoundation
                     dwTypeIndex = (int)param1;
                     ref IntPtr typeOut_ = ref Unsafe.AsRef<IntPtr>(param2);
                     MediaType typeOut;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetOutputAvailableType(dwOutputStreamID, dwTypeIndex, out typeOut);
                     typeOut_ = SharpDX.CppObject.ToCallbackPtr<MediaType>(typeOut);
                     return result;
@@ -338,9 +335,9 @@ namespace SharpDX.MediaFoundation
                     dwInputStreamID = (int)param0;
                     MediaType typeRef = default(MediaType);
                     IntPtr typeRef_ = (IntPtr)param1;
-                    MftSetTypeFlags dwFlags = default(MftSetTypeFlags);
-                    dwFlags = (MftSetTypeFlags)param2;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    TransformSetTypeFlags dwFlags = default(TransformSetTypeFlags);
+                    dwFlags = (TransformSetTypeFlags)param2;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     if (typeRef_ != IntPtr.Zero)
                         typeRef = new MediaType(typeRef_);
                     else
@@ -365,9 +362,9 @@ namespace SharpDX.MediaFoundation
                     dwOutputStreamID = (int)param0;
                     MediaType typeRef = default(MediaType);
                     IntPtr typeRef_ = (IntPtr)param1;
-                    MftSetTypeFlags dwFlags = default(MftSetTypeFlags);
-                    dwFlags = (MftSetTypeFlags)param2;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    TransformSetTypeFlags dwFlags = default(TransformSetTypeFlags);
+                    dwFlags = (TransformSetTypeFlags)param2;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     if (typeRef_ != IntPtr.Zero)
                         typeRef = new MediaType(typeRef_);
                     else
@@ -392,7 +389,7 @@ namespace SharpDX.MediaFoundation
                     dwInputStreamID = (int)param0;
                     ref IntPtr typeOut_ = ref Unsafe.AsRef<IntPtr>(param1);
                     MediaType typeOut;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetInputCurrentType(dwInputStreamID, out typeOut);
                     typeOut_ = SharpDX.CppObject.ToCallbackPtr<MediaType>(typeOut);
                     return result;
@@ -414,7 +411,7 @@ namespace SharpDX.MediaFoundation
                     dwOutputStreamID = (int)param0;
                     ref IntPtr typeOut_ = ref Unsafe.AsRef<IntPtr>(param1);
                     MediaType typeOut;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetOutputCurrentType(dwOutputStreamID, out typeOut);
                     typeOut_ = SharpDX.CppObject.ToCallbackPtr<MediaType>(typeOut);
                     return result;
@@ -435,7 +432,7 @@ namespace SharpDX.MediaFoundation
                     int dwInputStreamID = default(int);
                     dwInputStreamID = (int)param0;
                     ref int dwFlagsRef = ref Unsafe.AsRef<int>(param1);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetInputStatus(dwInputStreamID, out dwFlagsRef);
                     return result;
                 }
@@ -453,7 +450,7 @@ namespace SharpDX.MediaFoundation
                 {
                     Result result = default(Result);
                     ref int dwFlagsRef = ref Unsafe.AsRef<int>(param0);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.GetOutputStatus(out dwFlagsRef);
                     return result;
                 }
@@ -474,7 +471,7 @@ namespace SharpDX.MediaFoundation
                     hnsLowerBound = (long)param0;
                     long hnsUpperBound = default(long);
                     hnsUpperBound = (long)param1;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.SetOutputBounds(hnsLowerBound, hnsUpperBound);
                     return result;
                 }
@@ -495,7 +492,7 @@ namespace SharpDX.MediaFoundation
                     dwInputStreamID = (int)param0;
                     MediaEvent eventRef = default(MediaEvent);
                     IntPtr eventRef_ = (IntPtr)param1;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     if (eventRef_ != IntPtr.Zero)
                         eventRef = new MediaEvent(eventRef_);
                     else
@@ -516,11 +513,11 @@ namespace SharpDX.MediaFoundation
                 try
                 {
                     Result result = default(Result);
-                    TMessageType eMessage = default(TMessageType);
-                    eMessage = (TMessageType)param0;
+                    TransformMessageType eMessage = default(TransformMessageType);
+                    eMessage = (TransformMessageType)param0;
                     IntPtr ulParam = default(IntPtr);
                     ulParam = (IntPtr)param1;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     result = @this.ProcessMessage(eMessage, ulParam);
                     return result;
                 }
@@ -543,7 +540,7 @@ namespace SharpDX.MediaFoundation
                     IntPtr sampleRef_ = (IntPtr)param1;
                     int dwFlags = default(int);
                     dwFlags = (int)param2;
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     if (sampleRef_ != IntPtr.Zero)
                         sampleRef = new Sample(sampleRef_);
                     else
@@ -568,10 +565,10 @@ namespace SharpDX.MediaFoundation
                     dwFlags = (TransformProcessOutputFlags)param0;
                     int cOutputBufferCount = default(int);
                     cOutputBufferCount = (int)param1;
-                    ref TOutputDataBuffer.__Native outputSamplesRef_ = Unsafe.AsRef<TOutputDataBuffer.__Native>(param2);
-                    TOutputDataBuffer outputSamplesRef;
+                    ref TransformOutputDataBuffer.__Native outputSamplesRef_ = Unsafe.AsRef<TransformOutputDataBuffer.__Native>(param2);
+                    TransformOutputDataBuffer outputSamplesRef;
                     ref TransformProcessOutputStatus dwStatusRef = ref Unsafe.AsRef<TransformProcessOutputStatus>(param3);
-                    ITransform @this = (ITransform)ToShadow<ITransformShadow>(thisObject).Callback;
+                    ITransform @this = (ITransform)ToShadow<TransformShadow>(thisObject).Callback;
                     outputSamplesRef.__MarshalFrom(ref outputSamplesRef_);
                     result = @this.ProcessOutput(dwFlags, cOutputBufferCount, ref outputSamplesRef, out dwStatusRef);
                     return result;
