@@ -54,6 +54,7 @@
     <include file="mfmediaengine.h" attach="true"/>
     <include file="mfcaptureengine.h" attach="true"/>
   </ifdef>
+  <include file="codecapi.h" attach="true"/>
 
   <context-set id="mediafoundation-all">
     <context>sharpdx-mediafoundation</context>
@@ -72,6 +73,7 @@
     <context>wmcontainer</context>
     <context>uuids</context>
     <context>mferror</context>
+    <context>codecapi</context>
   </context-set>
 
   <extension>
@@ -676,6 +678,24 @@
 
     <map enum="#MF_CAPTURE_ENGINE_MEDIASOURCE" name="PreferredMediaStream" />
     <map enum-item="MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_(.*)" name="$1" />
+
+    <map enum="eAV(.*)" name="$1"/>
+    <map enum-item="eAV(.*?)_(.*)" name-tmp="$2"/>
+    <map enum-item="AV(.*?)_(.*)" name-tmp="$2"/>
+    <map enum-item="eAV(.*)Level(.*)" name="Level$2"/>
+    <map enum-item="eAV(.*)Level_(.*)" name-tmp="$2"/>
+    <map enum-item="eAVEnc(.*)VProfile_422" name="P422"/>
+    <map enum-item="eAVEnc(.*)VProfile_444" name="P444"/>
+    <map enum-item="eAVEnc(.*)VProfile_420_(.*)" name="P420_$2"/>
+    <map enum-item="eAVEnc(.*)VProfile_unknown" name="Unknown"/>
+    <map enum-item="eAV(.*)Layer(.*)" name="Layer$2"/>
+    <map enum-item="eAV(.*)Layer_(.*)" name="L$2"/>
+    <map enum-item="eAVEncVideoColorNominalRange_(.*)" name="R$1"/>
+    <map enum-item="eAVEncVideoColorTransferFunction_(.*)" name="TransferFunction$1"/>
+    <map enum-item="eAVEncVideoChromaResolution_(.*)" name="R$1"/>
+    <map enum-item="eAVEncChromaEncodeMode_(.*)" name="M$1"/>
+    <map enum-item="eAV(.*)SameAsSource" name="SameAsSource"/>
+    <map enum-item="eAVEncMPAEmphasisType_50_15" name="T50_15"/>
 
     <!--
     // *****************************************************************
